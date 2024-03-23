@@ -32,6 +32,17 @@ activateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 activateButton.BorderSizePixel = 0
 activateButton.Parent = frame
 
+-- Create a TextButton for destroying the UI
+local destroyButton = Instance.new("TextButton")
+destroyButton.Name = "DestroyButton"
+destroyButton.Text = "Destroy UI"
+destroyButton.Size = UDim2.new(0.8, 0, 0, 30)
+destroyButton.Position = UDim2.new(0.1, 0, 0.6, 0)
+destroyButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+destroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+destroyButton.BorderSizePixel = 0
+destroyButton.Parent = frame
+
 -- Variable to track script state
 local scriptActive = false
 local scriptLoop = nil
@@ -106,6 +117,11 @@ local function deactivateScript()
     activateButton.Text = "Activate Script"
 end
 
+-- Function to destroy the UI
+local function destroyUI()
+    gui:Destroy()
+end
+
 -- Connect the Activate button to its function
 activateButton.MouseButton1Click:Connect(function()
     if not scriptActive then
@@ -114,3 +130,6 @@ activateButton.MouseButton1Click:Connect(function()
         deactivateScript()
     end
 end)
+
+-- Connect the Destroy button to its function
+destroyButton.MouseButton1Click:Connect(destroyUI)
