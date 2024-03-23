@@ -1,4 +1,4 @@
-local ringNumbers = {9, 15, 18, 8, 19, 6, 7}  
+local ringNumbers = {9, 15, 18, 8, 19, 6, 7, 12}  
 
 -- Function to collect a ring with the given number
 local function collectRing(number)
