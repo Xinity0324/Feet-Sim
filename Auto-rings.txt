@@ -1,4 +1,4 @@
-local ringNumbers = {9, 15, 18, 8, 19, 6, 7}  -- Including ring number 6
+local ringNumbers = {9, 15, 18, 8, 19, 6, 7}  
 
 -- Function to collect a ring with the given number
 local function collectRing(number)
@@ -9,7 +9,6 @@ local function collectRing(number)
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
 end
 
--- Function to collect all rings simultaneously
 local function collectAllRings()
     local coroutines = {}
     for _, number in ipairs(ringNumbers) do
@@ -22,7 +21,6 @@ local function collectAllRings()
     end
 end
 
--- Loop to collect all rings every 10.1 seconds
 while true do
     collectAllRings()
     wait(10.1)
