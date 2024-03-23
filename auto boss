@@ -1,0 +1,116 @@
+-- Create a ScreenGui
+local gui = Instance.new("ScreenGui")
+gui.Name = "ScriptGUI"
+gui.Parent = game.Players.LocalPlayer.PlayerGui
+
+-- Create a Frame for the GUI
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 200, 0, 100)
+frame.Position = UDim2.new(0.5, -100, 0.5, -50)
+frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+frame.BorderSizePixel = 0
+frame.Parent = gui
+
+-- Create a TextLabel for the title
+local title = Instance.new("TextLabel")
+title.Text = "Script Controller"
+title.TextSize = 18
+title.Size = UDim2.new(1, 0, 0, 20)
+title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.BorderSizePixel = 0
+title.Parent = frame
+
+-- Create a TextButton for toggling the script state
+local activateButton = Instance.new("TextButton")
+activateButton.Name = "ActivateButton"
+activateButton.Text = "Activate Script"
+activateButton.Size = UDim2.new(0.8, 0, 0, 30)
+activateButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+activateButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+activateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+activateButton.BorderSizePixel = 0
+activateButton.Parent = frame
+
+-- Variable to track script state
+local scriptActive = false
+local scriptLoop = nil
+
+-- Your desired script function
+local function desiredScript()
+    -- Your desired script logic here
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local RemoteEvent = ReplicatedStorage:WaitForChild("RemoteEvent")
+    
+    -- Function to teleport the player's character to a specific position
+    local function teleportToPosition(x, y, z)
+        local character = game.Players.LocalPlayer.Character
+        if character then
+            local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+            if humanoidRootPart then
+                local position = Vector3.new(x, y, z)
+                humanoidRootPart.CFrame = CFrame.new(position)
+            end
+        end
+    end
+    
+    -- Move the character forward and backward
+    local function moveCharacter()
+        local character = game.Players.LocalPlayer.Character
+        if character then
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid:MoveTo(character.HumanoidRootPart.Position + Vector3.new(0, 0, 35))
+                wait(0.5)
+                humanoid:MoveTo(character.HumanoidRootPart.Position + Vector3.new(0, 0, -35))
+            end
+        end
+    end
+    
+    -- Function to perform the actions
+    local function performActions()
+        local startArgs = {
+            [1] = "Start Human Race",
+            [2] = "Pink Girl"
+        }
+        RemoteEvent:FireServer(unpack(startArgs))
+        wait(8.5)
+        local targetX = 59.004940032958984
+        local targetY = 52.9999885559082
+        local targetZ = -2533.34326171875
+        teleportToPosition(targetX, targetY, targetZ)
+        moveCharacter()
+    end
+    
+    -- Perform actions initially
+    performActions()
+    
+    -- Repeat after 5 seconds if scriptActive is true
+    while scriptActive do
+        wait(5)
+        performActions()
+    end
+end
+
+-- Function to activate the script
+local function activateScript()
+    scriptActive = true
+    activateButton.Text = "Deactivate Script"
+    -- Execute the desired script
+    desiredScript()
+end
+
+-- Function to deactivate the script
+local function deactivateScript()
+    scriptActive = false
+    activateButton.Text = "Activate Script"
+end
+
+-- Connect the Activate button to its function
+activateButton.MouseButton1Click:Connect(function()
+    if not scriptActive then
+        activateScript()
+    else
+        deactivateScript()
+    end
+end)
