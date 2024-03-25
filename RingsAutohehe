@@ -25,5 +25,5 @@ end
 
 while true do
     collectAllRings()
-    wait(10.1)
+    wait(0.002)  -- Adjusted wait time for loop speed of 500 loops per second
 end
