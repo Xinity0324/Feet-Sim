@@ -14,9 +14,20 @@ end
 local function collectAllRings()
     local coroutines = {}
     for _, number in ipairs(ringNumbers) do
+        local waitTime = 10.1
+        if number == 3 then
+            waitTime = 25.1
+        elseif number == 4 then
+            waitTime = 30.1
+        elseif number == 6 then
+            waitTime = 40.1
+        elseif number == 7 then
+            waitTime = 25.1
+        end
         table.insert(coroutines, coroutine.create(function()
             collectRing(number)
         end))
+        wait(waitTime)
     end
     for _, co in ipairs(coroutines) do
         coroutine.resume(co)
@@ -25,5 +36,4 @@ end
 
 while true do
     collectAllRings()
-    wait(10.1)  -- Adjusted wait time for loop speed of 500 loops per second
 end
