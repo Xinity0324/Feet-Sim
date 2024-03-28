@@ -25,5 +25,5 @@ end
 
 while true do
     collectAllRings()
-    wait(10.1) 
+    wait(999999999999.1) 
 end
